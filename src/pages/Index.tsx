@@ -46,12 +46,15 @@ const Index = () => {
             <Trophy className="h-8 w-8 text-primary" />
             <h1 className="text-2xl font-bold text-primary">African Nations League</h1>
           </div>
-          <div className="flex gap-3">
+          <div className="flex gap-3 flex-wrap justify-end">
+            <Button variant="outline" onClick={() => navigate("/tournament")}>
+              View Tournament
+            </Button>
+            <Button variant="outline" onClick={() => navigate("/top-scorers")}>
+              Top Scorers
+            </Button>
             {user ? (
               <>
-                <Button variant="outline" onClick={() => navigate("/tournament")}>
-                  View Tournament
-                </Button>
                 <Button variant="outline" onClick={() => navigate("/register-team")}>
                   Register Team
                 </Button>

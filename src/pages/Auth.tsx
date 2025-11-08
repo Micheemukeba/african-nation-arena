@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
+import { assignFederationRepresentativeRole } from "@/lib/authHelpers";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -106,6 +107,16 @@ const Auth = () => {
           toast.error(error.message);
         }
         return;
+      }
+
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session?.user?.id) {
+        try {
+          await assignFederationRepresentativeRole(session.user.id);
+        } catch (roleError) {
+          console.error("Failed to assign role:", roleError);
+          toast.warning("Account created but role assignment failed");
+        }
       }
 
       toast.success("Account created successfully!");
