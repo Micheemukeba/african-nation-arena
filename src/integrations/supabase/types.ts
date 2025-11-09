@@ -220,7 +220,7 @@ export type Database = {
           created_at: string | null
           id: string
           manager_name: string
-          representative_id: string
+          representative_id: string | null
           representative_name: string
           team_rating: number | null
           updated_at: string | null
@@ -230,7 +230,7 @@ export type Database = {
           created_at?: string | null
           id?: string
           manager_name: string
-          representative_id: string
+          representative_id?: string | null
           representative_name: string
           team_rating?: number | null
           updated_at?: string | null
@@ -240,7 +240,7 @@ export type Database = {
           created_at?: string | null
           id?: string
           manager_name?: string
-          representative_id?: string
+          representative_id?: string | null
           representative_name?: string
           team_rating?: number | null
           updated_at?: string | null
