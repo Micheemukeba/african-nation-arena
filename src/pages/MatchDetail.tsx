@@ -10,6 +10,7 @@ import { toast } from "sonner";
 interface Goal {
   id: string;
   player_id: string;
+  team_id: string;
   player_name: string;
   minute: number;
 }
@@ -74,6 +75,7 @@ const MatchDetail = () => {
           .select(`
             id,
             player_id,
+            team_id,
             minute,
             players(name)
           `)
@@ -87,6 +89,7 @@ const MatchDetail = () => {
         const formattedGoals = (goals || []).map((g: any) => ({
           id: g.id,
           player_id: g.player_id,
+          team_id: g.team_id,
           player_name: g.players?.name || "Unknown",
           minute: g.minute,
         }));
@@ -138,23 +141,8 @@ const MatchDetail = () => {
     final: "Final",
   }[match.stage] || match.stage;
 
-  const team1Goals = match.goals.filter((g) => {
-    const { data } = supabase
-      .from("goal_events")
-      .select("team_id")
-      .eq("id", g.id)
-      .single();
-    return data?.team_id === match.team1_id;
-  });
-
-  const team2Goals = match.goals.filter((g) => {
-    const { data } = supabase
-      .from("goal_events")
-      .select("team_id")
-      .eq("id", g.id)
-      .single();
-    return data?.team_id === match.team2_id;
-  });
+  const team1Goals = match.goals.filter((g) => g.team_id === match.team1_id);
+  const team2Goals = match.goals.filter((g) => g.team_id === match.team2_id);
 
   return (
     <div className="min-h-screen bg-background p-4">
